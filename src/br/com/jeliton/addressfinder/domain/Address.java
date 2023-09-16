@@ -9,7 +9,10 @@ public class Address {
     private String uf;
     private String codingIbge;
     private String ddd;
+    private boolean error = false;
 
+    /*Atribuindo um construtor que recebe um objeto do tipo AddressViaCep que é o nosso record que inicializa
+    * e recebe a requisição e usamos para transformar no nosso objeto Address*/
     public Address(AddressViaCep addressViaCep) {
         this.cep = addressViaCep.cep();
         this.publicPlace = addressViaCep.logradouro();
@@ -19,6 +22,7 @@ public class Address {
         this.uf = addressViaCep.uf();
         this.codingIbge = addressViaCep.ibge();
         this.ddd = addressViaCep.ddd();
+        this.error = addressViaCep.erro();
     }
 
     public String getCep() {
@@ -53,6 +57,10 @@ public class Address {
         return ddd;
     }
 
+    public boolean getError() {
+        return error;
+    }
+
     public String toString() {
         return """
                 CEP: %s
@@ -62,7 +70,8 @@ public class Address {
                 MUNICÍPIO: %s
                 UF: %s
                 CÓDIGO IBGE: %s
-                DDD: %s""".formatted(this.cep, this.publicPlace, this.complement,
-                this.neighborhood, this.county, this.uf, this.codingIbge, this.ddd);
+                DDD: %s
+                ERROR: %b""".formatted(this.cep, this.publicPlace, this.complement,
+                this.neighborhood, this.county, this.uf, this.codingIbge, this.ddd,this.error);
     }
 }
