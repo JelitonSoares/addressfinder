@@ -2,6 +2,7 @@ package br.com.jeliton.addressfinder.domain;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
 
 public class Converter {
     private String json;
@@ -24,8 +25,13 @@ public class Converter {
     }
 
     public void toAddress(String json) {
-        AddressViaCep addressViaCep = gson.fromJson(json, AddressViaCep.class);
+        try {
+            AddressViaCep addressViaCep = gson.fromJson(json, AddressViaCep.class);
+            this.address = new Address(addressViaCep);
+        } catch (JsonSyntaxException exception) {
+            System.out.println("Erro na sintaxe do JSON");
+            System.out.println(exception.getMessage());
+        }
 
-        this.address = new Address(addressViaCep);
     }
 }

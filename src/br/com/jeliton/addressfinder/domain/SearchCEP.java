@@ -6,6 +6,7 @@ import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.security.InvalidParameterException;
 
 public class SearchCEP {
     private String cepFound;
@@ -16,14 +17,17 @@ public class SearchCEP {
 
     public void search (String cep) throws IOException, InterruptedException {
 
-        String requestApi = "http://viacep.com.br/ws/" + cep + "/json/";
+        if (cep.length() == 8) {
 
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(requestApi))
-                .build();
-        HttpResponse<String> response = client
-                .send(request, HttpResponse.BodyHandlers.ofString());
+            String requestApi = "http://viacep.com.br/ws/" + cep + "/json/";
 
-        this.cepFound = response.body();
+            HttpClient client = HttpClient.newHttpClient();
+            HttpRequest request = HttpRequest.newBuilder().uri(URI.create(requestApi))
+                    .build();
+            HttpResponse<String> response = client
+                    .send(request, HttpResponse.BodyHandlers.ofString());
+
+            this.cepFound = response.body();
+        } else throw new InvalidParameterException("Um CEP deve ter 8 (oito) digitos!!");
     }
 }
