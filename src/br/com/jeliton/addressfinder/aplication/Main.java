@@ -33,7 +33,7 @@ public class Main {
             //Condição para que o usário decida se quer sair ou ficar
             if (searchCondition.equalsIgnoreCase("s")) {
 
-                //Caso escolha "sim" o programa solicita um CEP para buscar
+                //Caso escolha "s" (sim) o programa solicita um CEP para buscar
                 System.out.println("Digite um CEP para busca: ");
                 String cep = scanner.nextLine();
 
@@ -76,7 +76,7 @@ public class Main {
 
             } else if (searchCondition.equalsIgnoreCase("n")) {
 
-                /*Caso o usuário escolha "n" o programa grava a lista em um arquivo .json e finaliza, também
+                /*Caso o usuário escolha "n" (não) o programa grava a lista em um arquivo .json e finaliza, também
                 * utilizamos o bloco try-catch para fazer o tratamento de erros*/
 
                 try {
@@ -90,7 +90,7 @@ public class Main {
                     exit = true;
                 }
 
-                //Caso nem "s" e nem "n" é escolhido o programa solicita uma opção válida
+                //Caso nem "s" e nem "n" for escolhido o programa solicita uma opção válida
             } else System.out.println("Digite uma opção válida!!");
         }
 
