@@ -15,6 +15,10 @@ public class SearchCEP {
         return cepFound;
     }
 
+    /*Implementando o método search que faz a busca do CEP através de uma requisição HTTP à API ViaCEP e armazena
+    * o json retornado no atributo cepFund
+    * lançamos as exceções para trata-las no método main
+    * */
     public void search (String cep) throws IOException, InterruptedException {
 
         if (cep.length() == 8) {

@@ -8,6 +8,7 @@ public class Converter {
     private String json;
     private Address address;
 
+    //Instanciando a biblioteca que realiza a conversão
     Gson gson = new GsonBuilder()
             .setPrettyPrinting()
             .create();
@@ -20,11 +21,18 @@ public class Converter {
         return address;
     }
 
+    //Implementando o método que converte um objeto Address para json
     public void toJson(Address address) {
           this.json =  gson.toJson(address);
     }
 
+
+    //Método que transforma um json em objeto Address
     public void toAddress(String json) {
+
+
+        /*Aqui usamos um bloco try-catch para tratar as exceções e usamos o método fromJson da biblioteca Gson
+        * para transformar um json em objeto Address*/
         try {
             AddressViaCep addressViaCep = gson.fromJson(json, AddressViaCep.class);
             this.address = new Address(addressViaCep);
