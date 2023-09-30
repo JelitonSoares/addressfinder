@@ -14,6 +14,5 @@ a ArrayList e classes de entrada de dados como a Scanner, e fazer requisições 
 <h1>Como usar:</h1>
 <p>Para fazer a utilização do código você precisará de um editor de códigos, neste caso eu usei o IntelliJ IDEA, basta ir até a classe main e usar o atalho "SHIFT" + F10 para iniciar o 
 programa e ir respndendo as pergutas do console:</p>
-Passo 1:
-![1](https://github.com/JelitonSoares/addressfinder/assets/132035058/ba109bbb-aa63-4823-939e-46762f9fd77f)
+
 
