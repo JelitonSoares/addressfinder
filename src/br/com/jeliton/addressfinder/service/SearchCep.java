@@ -1,28 +1,28 @@
-package br.com.jeliton.addressfinder.domain;
+package br.com.jeliton.addressfinder.service;
 
 import java.io.IOException;
 import java.net.URI;
-import java.net.URLEncoder;
+
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.security.InvalidParameterException;
 
-public class SearchCEP {
-    private String cepFound;
-
-    public String getCepFound() {
-        return cepFound;
-    }
+public class SearchCep {
 
     /*Implementando o método search que faz a busca do CEP através de uma requisição HTTP à API ViaCEP e armazena
     * o json retornado no atributo cepFund
     * lançamos as exceções para trata-las no método main
     * */
-    public void search (String cep) throws IOException, InterruptedException {
+    public  String search (String cep) throws IOException, InterruptedException {
 
-        if (cep.length() == 8) {
+        if (cep.length() != 8) {
+            throw new InvalidParameterException("cep = 8 digitos");
 
+        } else if (cep == null) {
+            throw new NullPointerException("cep = null");
+
+        } else {
             String requestApi = "http://viacep.com.br/ws/" + cep + "/json/";
 
             HttpClient client = HttpClient.newHttpClient();
@@ -31,7 +31,7 @@ public class SearchCEP {
             HttpResponse<String> response = client
                     .send(request, HttpResponse.BodyHandlers.ofString());
 
-            this.cepFound = response.body();
-        } else throw new InvalidParameterException("Um CEP deve ter 8 (oito) digitos!!");
+            return response.body();
+        }
     }
 }

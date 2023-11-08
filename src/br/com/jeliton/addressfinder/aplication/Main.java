@@ -1,9 +1,9 @@
 package br.com.jeliton.addressfinder.aplication;
 
 import br.com.jeliton.addressfinder.domain.Address;
-import br.com.jeliton.addressfinder.domain.Converter;
-import br.com.jeliton.addressfinder.domain.FileCreator;
-import br.com.jeliton.addressfinder.domain.SearchCEP;
+import br.com.jeliton.addressfinder.service.Converter;
+import br.com.jeliton.addressfinder.service.FileCreator;
+import br.com.jeliton.addressfinder.service.SearchCep;
 
 import java.io.IOException;
 import java.security.InvalidParameterException;
@@ -15,7 +15,7 @@ public class Main {
     public static void main(String[] args) {
 
         //Instanciando os objetos que vão ser usados
-        SearchCEP searchCEP = new SearchCEP();
+        SearchCep searchCep = new SearchCep();
         Converter converter = new Converter();
         FileCreator fileCreator = new FileCreator();
         Scanner scanner = new Scanner(System.in);
@@ -46,33 +46,23 @@ public class Main {
                     * true caso a API não encontre aquele CEP, caso o CEP exista nós convertemos o objeto
                     * Address em JSON e adicionamos ele a lista de endereços*/
 
-                    searchCEP.search(cep);
+                    Address address = converter.toAddress(searchCep.search(cep));
 
-                    String myCep = searchCEP.getCepFound();
-
-                    converter.toAddress(myCep);
-
-                    Address myAddress = converter.getAddress();
-
-                    if (myAddress.getError()) {
+                    if (address.getError()) {
                         System.out.println("CEP não encontrado!!");
                     } else {
-                        converter.toJson(myAddress);
-                        String myJson = converter.getJson();
+
+                        String myJson = converter.toJson(address);
                         list.add(myJson);
 
                         System.out.println("CEP Buscado com sucesso!!");
                     }
 
                     //Tratando as exceções
-                } catch (IOException | InterruptedException exception) {
+                } catch (IOException | InterruptedException | InvalidParameterException exception) {
                     System.out.println("Ocorreu um erro na busca!!");
                     System.out.println(exception.getMessage());
-                } catch (InvalidParameterException exception) {
-                    System.out.println("Ocorreu um erro no CEP!!");
-                    System.out.println(exception.getMessage());
                 }
-
 
             } else if (searchCondition.equalsIgnoreCase("n")) {
 
@@ -82,9 +72,13 @@ public class Main {
                 try {
                     fileCreator.createFile(list.toString(), "cep.json");
                     System.out.println("Volte Sempre!!");
+
+
                 } catch (IOException exception) {
                     System.out.println("Não foi possível abrir o arquivo!!");
                     System.out.println(exception.getMessage());
+
+
                 } finally {
                     scanner.close();
                     exit = true;
@@ -93,7 +87,5 @@ public class Main {
                 //Caso nem "s" e nem "n" for escolhido o programa solicita uma opção válida
             } else System.out.println("Digite uma opção válida!!");
         }
-
-
     }
 }

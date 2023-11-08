@@ -1,7 +1,9 @@
-package br.com.jeliton.addressfinder.domain;
+package br.com.jeliton.addressfinder.service;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class FileCreator {
@@ -13,7 +15,5 @@ public class FileCreator {
         fileWriter.write(text);
         fileWriter.close();
     }
-
-
 
 }
